@@ -13,23 +13,19 @@ class Solution {
        
         
         
-        PriorityQueue<Pair> pq = new PriorityQueue<>((a,b) -> {
-            return a.frequency - b.frequency;
+        PriorityQueue<Integer> pq = new PriorityQueue<>((a,b) -> {
+            return map.get(a) - map.get(b);
         });
         
         for(Integer val : map.keySet()){
             
-            if(pq.size() < k){
                 
-                pq.add(new Pair(val,map.get(val)));
+                pq.add(val);
                 
-            } else {
+            if(pq.size() > k) {
                 
-                if(map.get(val) > pq.peek().frequency){
-                    pq.remove();
-                     pq.add(new Pair(val,map.get(val)));
-                    
-                }
+               pq.remove();
+        
             }
     
         }
@@ -39,7 +35,7 @@ class Solution {
         int i = 0;
         
         while(pq.size() > 0){
-            ans[i] = pq.peek().element;
+            ans[i] = pq.peek();
             pq.remove();
             i++;
         }
