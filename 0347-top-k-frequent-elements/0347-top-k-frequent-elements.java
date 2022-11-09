@@ -45,14 +45,3 @@ class Solution {
 
 }
 
-class Pair {
-    
-    int element;
-    int frequency;
-    
-    Pair(int element , int frequency){
-        this.element = element;
-        this.frequency = frequency;
-    }
-    
-}
