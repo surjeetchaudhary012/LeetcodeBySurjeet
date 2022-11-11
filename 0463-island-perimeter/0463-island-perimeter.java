@@ -8,20 +8,14 @@ class Solution {
                 
                 if(grid[i][j] == 1){
                     
-                    if( i-1 < 0 || grid[i-1][j] == 0){
-                        perimeter += 1;
+                 perimeter += 4;
+                    
+                    if(i != 0 && grid[i-1][j] == 1){
+                        perimeter -= 2;
                     } 
                     
-                    if( j-1 < 0 || grid[i][j-1] == 0){
-                        perimeter += 1;
-                    }
-                    
-                    if( i+1 == grid.length || grid[i+1][j] == 0){
-                        perimeter += 1;
-                    }
-                    
-                    if( j+1 == grid[0].length || grid[i][j+1] == 0){
-                        perimeter += 1;
+                    if(j != 0 && grid[i][j-1] == 1){
+                        perimeter -= 2;
                     }
                     
                 }
