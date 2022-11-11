@@ -37,14 +37,7 @@ class Solution{
                 startPoint.put(arr[i],i);
             }
     
-                if (map.get(arr[i]) > maxFreq){
-                    
-                    start = startPoint.get(arr[i]);
-                    end = i;
-                    length = end - start + 1;
-                    maxFreq = map.get(arr[i]);
-                    
-                } else if (map.get(arr[i]) == maxFreq){
+                if (map.get(arr[i]) == maxFreq){
                     
                      if(i - startPoint.get(arr[i]) + 1 < length){
                          
@@ -54,6 +47,13 @@ class Solution{
                     
                 }
                 
+                } else if  (map.get(arr[i]) > maxFreq){
+                    
+                    start = startPoint.get(arr[i]);
+                    end = i;
+                    length = end - start + 1;
+                    maxFreq = map.get(arr[i]);
+                    
                 }
                 
             }
