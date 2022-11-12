@@ -113,39 +113,57 @@ class Solution
         
         ArrayList<Integer> ans = new ArrayList<>();
         
-        findNode(root,target,k,ans);
+         ArrayList<Node> path = new ArrayList<>();
+        
+        
+          findPath(root,target,path);
+          
+          Node blockNode = null;
+        
+          for(int i = 0; i < path.size(); i++){
+              
+              Node node = path.get(i);
+              
+              kDown(node,k-i,blockNode,ans);
+              
+              blockNode = node;
+              
+          }
         
         Collections.sort(ans);
         return ans;
     }
     
-    
-    public static int findNode(Node root, int target, int k , ArrayList<Integer> ans){
+    private static int findPath(Node root, int target, ArrayList<Node> path){
         
         if(root == null){
-            return -1;
+            return 0;
         }
         
         if(root.data == target){
-            kDown(root,k,null,ans);
+            path.add(root);
             return 1;
         }
         
-        int left = findNode(root.left,target,k,ans);
+         int left = findPath(root.left, target, path);
+         
+         if(left >= 1){
+             path.add(root);
+             return 1;
+         }
+         
+         int right = findPath(root.right, target, path);
+         
+         if(right >= 1){
+             path.add(root);
+             return 1;
+         }
+         
+         return 0;
         
-        if(left >= 1){
-            kDown(root,k-left,root.left,ans);
-            return left + 1;
-        }
-        int right = findNode(root.right,target,k,ans);
-        
-        if(right >= 1){
-            kDown(root,k-right,root.right,ans);
-            return right + 1;
-        }
-        
-        return 0;
     }
+    
+   
     
     public static void kDown(Node root , int k , Node blockNode , ArrayList<Integer> ans){
         
