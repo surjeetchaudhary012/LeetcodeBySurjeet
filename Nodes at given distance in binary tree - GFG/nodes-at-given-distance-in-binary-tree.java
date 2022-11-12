@@ -113,10 +113,7 @@ class Solution
         
         ArrayList<Integer> ans = new ArrayList<>();
         
-         ArrayList<Node> path = new ArrayList<>();
-        
-        
-          findPath(root,target,path);
+        ArrayList<Node> path = findPath(root,target);
           
           Node blockNode = null;
         
@@ -129,37 +126,41 @@ class Solution
               blockNode = node;
               
           }
+          
+         
         
         Collections.sort(ans);
         return ans;
     }
     
-    private static int findPath(Node root, int target, ArrayList<Node> path){
+    private static ArrayList<Node>  findPath(Node root, int target){
         
         if(root == null){
-            return 0;
+            return new ArrayList<>();
         }
         
         if(root.data == target){
+            
+            ArrayList<Node> path = new ArrayList<>();
             path.add(root);
-            return 1;
+            return path;
         }
         
-         int left = findPath(root.left, target, path);
+           ArrayList<Node>  left = findPath(root.left, target);
          
-         if(left >= 1){
-             path.add(root);
-             return 1;
+         if(left.size() > 0){
+             left.add(root);
+             return left;
          }
          
-         int right = findPath(root.right, target, path);
+         ArrayList<Node> right = findPath(root.right, target);
          
-         if(right >= 1){
-             path.add(root);
-             return 1;
+         if(right.size() >= 1){
+             right.add(root);
+             return right;
          }
          
-         return 0;
+         return new ArrayList<>();
         
     }
     
