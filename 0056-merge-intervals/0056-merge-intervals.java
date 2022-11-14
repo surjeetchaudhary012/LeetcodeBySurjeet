@@ -5,57 +5,33 @@ class Solution {
             return a[0] - b[0];
         });
         
-        ArrayList<Pair> container = new ArrayList<>();
+        ArrayList< int [] > list = new ArrayList<>();
              
-        int k = 0;
+        int i = 0;
         
-        container.add(new Pair(arr[0][0],arr[0][1]));
-        
-        for(int i = 1; i < arr.length; i++){
+        for(int [] interval : arr){
             
-            Pair pc = container.get(k);
-            
-            if(arr[i][0] <= pc.end){
-                
-                Pair p = new Pair(0,0);
-                p.start = pc.start;
-                p.end = Math.max(arr[i][1],pc.end);
-                
-                container.set(k,p);
-                
+            if(list.size() == 0){
+                list.add(interval);
             } else {
-                container.add(new Pair(arr[i][0],arr[i][1]));
-               k++;
-                 
+                
+                int [] prevInterval = list.get(list.size() - 1);
+                
+                if(interval[0] <= prevInterval[1]){
+                    prevInterval[1] = Math.max(interval[1],prevInterval[1]);
+                } else{
+                    list.add(interval);
+                }
+                
             }
-                 
+            
+            
+            
         }
-                   
-         int [][] ans = new int[container.size()][2];
-         
-         for(int j = 0; j < container.size(); j++){
-             
-             Pair p = container.get(j);
-              ans[j][0] = p.start;
-             ans[j][1] = p.end;
-         }
-          
-        return ans;
+        
+       return list.toArray(new int[list.size()][]); 
         
     }
 }
 
-class Pair {
-    
-    int start;
-    int end;
-    
-    Pair(int start, int end){
-        this.start = start;
-        this.end = end;
-    }
-    
-    public String toString(){
-      return start + "-" + end;
-    }
-}
+ 
