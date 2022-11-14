@@ -20,8 +20,6 @@ class Solution {
         
         for(int i = 1; i < list.size(); i++){
             
-            System.out.println(list.get(i));
-            
             Pair pl = list.get(i);
             Pair pc = container.get(k);
             
@@ -42,7 +40,7 @@ class Solution {
             
         }
         
-         System.out.println(container);
+        
               
          int [][] ans = new int[container.size()][2];
          
