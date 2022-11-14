@@ -39,68 +39,32 @@ class Solution
 {
     public int[][] overlappedInterval(int[][] arr)
     {
-        
-        ArrayList<Pair> list = new ArrayList<>();
-        
-        for(int i = 0;  i < arr.length; i++){
-            
-            list.add(new Pair(arr[i][0],arr[i][1]));
-        }
-        
-        Collections.sort(list,(a,b) -> {
-            return a.start - b.start;
+          Arrays.sort(arr,(a,b) -> {
+            return a[0] - b[0];
         });
         
-       
-        
+        ArrayList< int [] > list = new ArrayList<>();
+             
         int i = 0;
         
-        while(i < list.size() - 1){
+        for(int [] interval : arr){
             
-            Pair first = list.get(i);
-            Pair second = list.get(i+1);
-        
-            if(first.end >= second.start){
-                
-                list.remove(i+1);
-                list.set(i,new Pair(Math.min(first.start,second.start),Math.max(first.end,second.end)));
-                
+            if(list.size() == 0){
+                list.add(interval);
             } else {
-                i++;
+                
+                int [] prevInterval = list.get(list.size() - 1);
+                
+                if(interval[0] <= prevInterval[1]){
+                    prevInterval[1] = Math.max(interval[1],prevInterval[1]);
+                } else{
+                    list.add(interval);
+                }
+                
             }
-        
-            
+                    
         }
         
-        // System.out.println(list);
-        
-         int [][] ans = new int[list.size()][2];
-         
-         for(int j = 0; j < list.size(); j++){
-             
-             Pair p = list.get(j);
-              ans[j][0] = p.start;
-             ans[j][1] = p.end;
-         }
-         
-     
-        
-        return ans;
-        
-    }
-}
-
-class Pair {
-    
-    int start;
-    int end;
-    
-    Pair(int start, int end){
-        this.start = start;
-        this.end = end;
-    }
-    
-    public String toString(){
-      return start + "-" + end;
+       return list.toArray(new int[list.size()][]); 
     }
 }
