@@ -1,47 +1,36 @@
 class Solution {
     public int[][] merge(int[][] arr) {
         
-          ArrayList<Pair> list = new ArrayList<>();
-        
-        for(int i = 0;  i < arr.length; i++){
-            
-            list.add(new Pair(arr[i][0],arr[i][1]));
-        }
-        
-        Collections.sort(list,(a,b) -> {
-            return a.start - b.start;
+        Arrays.sort(arr,(a,b) -> {
+            return a[0] - b[0];
         });
         
         ArrayList<Pair> container = new ArrayList<>();
              
         int k = 0;
         
-        container.add(list.get(0));
+        container.add(new Pair(arr[0][0],arr[0][1]));
         
-        for(int i = 1; i < list.size(); i++){
+        for(int i = 1; i < arr.length; i++){
             
-            Pair pl = list.get(i);
             Pair pc = container.get(k);
             
-            if(pl.start <= pc.end){
+            if(arr[i][0] <= pc.end){
                 
                 Pair p = new Pair(0,0);
                 p.start = pc.start;
-                p.end = Math.max(pc.end,pl.end);
+                p.end = Math.max(arr[i][1],pc.end);
                 
                 container.set(k,p);
                 
             } else {
-                container.add(pl);
+                container.add(new Pair(arr[i][0],arr[i][1]));
                k++;
                  
             }
-           
-            
+                 
         }
-        
-        
-              
+                   
          int [][] ans = new int[container.size()][2];
          
          for(int j = 0; j < container.size(); j++){
