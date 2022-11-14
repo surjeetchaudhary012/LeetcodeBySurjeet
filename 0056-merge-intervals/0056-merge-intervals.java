@@ -12,40 +12,47 @@ class Solution {
             return a.start - b.start;
         });
         
+        ArrayList<Pair> container = new ArrayList<>();
+             
+        int k = 0;
         
-       
+        container.add(list.get(0));
         
-        int i = 0;
-        
-        while(i < list.size() - 1){
+        for(int i = 1; i < list.size(); i++){
             
-            Pair first = list.get(i);
-            Pair second = list.get(i+1);
-        
-            if(first.end >= second.start){
+            System.out.println(list.get(i));
+            
+            Pair pl = list.get(i);
+            Pair pc = container.get(k);
+            
+            if(pl.start <= pc.end){
                 
-                list.remove(i+1);
-                list.set(i,new Pair(Math.min(first.start,second.start),Math.max(first.end,second.end)));
+                Pair p = new Pair(0,0);
+                p.start = pc.start;
+                p.end = Math.max(pc.end,pl.end);
+                
+                container.set(k,p);
                 
             } else {
-                i++;
+                container.add(pl);
+               k++;
+                 
             }
-        
+           
             
         }
         
-        
-         int [][] ans = new int[list.size()][2];
+         System.out.println(container);
+              
+         int [][] ans = new int[container.size()][2];
          
-         for(int j = 0; j < list.size(); j++){
+         for(int j = 0; j < container.size(); j++){
              
-             Pair p = list.get(j);
+             Pair p = container.get(j);
               ans[j][0] = p.start;
              ans[j][1] = p.end;
          }
-         
-     
-        
+          
         return ans;
         
     }
