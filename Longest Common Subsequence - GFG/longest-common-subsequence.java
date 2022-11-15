@@ -42,12 +42,12 @@ class Solution
                     int notTake = 0;
                     
                     if(s1.charAt(i-1) == s2.charAt(j-1)){
-                        take = 1 + dp[i-1][j-1];
+                        dp[i][j] = 1 + dp[i-1][j-1];
                     } else {
-                        notTake = Math.max(dp[i-1][j],dp[i][j-1]);
+                       dp[i][j] = Math.max(dp[i-1][j],dp[i][j-1]);
                     }
                     
-                    dp[i][j] = Math.max(take,notTake);
+                    // dp[i][j] = Math.max(take,notTake);
                 
             }
         }
