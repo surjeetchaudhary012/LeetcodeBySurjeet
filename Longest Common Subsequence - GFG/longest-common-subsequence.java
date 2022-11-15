@@ -30,24 +30,33 @@ class Solution
     static int lcs(int x, int y, String s1, String s2)
     {
         
-        int n = s1.length();
-        int m = s2.length();
+         int  m = s1.length();
+          int n = s2.length();
+       
+        int [] prev = new int[n+1];
         
-        int [][] dp = new int[n+1][m+1];
-        
-        for(int i = 1; i < dp.length; i++){
-            for(int j = 1; j < dp[0].length; j++){
+         for(int i = 1; i <= m; i++){
+             
+             int [] curr = new int[n+1];
+             
+            for(int j = 1; j <= n; j++){
                 
-                    if(s1.charAt(i-1) == s2.charAt(j-1)){
-                        dp[i][j] = 1 + dp[i-1][j-1];
-                    } else {
-                       dp[i][j] = Math.max(dp[i-1][j],dp[i][j-1]);
-                    }
-                
+                if(s1.charAt(i-1) == s2.charAt(j-1)){
+                    
+                    curr[j] = prev[j-1] + 1;
+                    
+                } else {
+                    
+                    curr[j] = Math.max(prev[j] , curr[j-1]);
+                    
+                }
             }
+            
+            prev = curr;
+            
         }
-        
-        return dp[n][m];
+      
+         return prev[n]; 
         
     }
     
