@@ -33,13 +33,32 @@ class Solution
         int n = s1.length();
         int m = s2.length();
         
-        int [][] dp = new int[n][m];
+        int [][] dp = new int[n+1][m+1];
         
-        for(int [] arr : dp){
-            Arrays.fill(arr,-1);
+        for(int i = 1; i < dp.length; i++){
+            for(int j = 1; j < dp[0].length; j++){
+                
+                    int take = 0;
+                    int notTake = 0;
+                    
+                    if(s1.charAt(i-1) == s2.charAt(j-1)){
+                        take = 1 + dp[i-1][j-1];
+                    } else {
+                        notTake = Math.max(dp[i-1][j],dp[i][j-1]);
+                    }
+                    
+                    dp[i][j] = Math.max(take,notTake);
+                
+            }
         }
         
-        return findLCS(s1,s2,n-1,m-1,dp);
+        return dp[n][m];
+        
+        // for(int [] arr : dp){
+        //     Arrays.fill(arr,-1);
+        // }
+        
+        // return findLCS(s1,s2,n-1,m-1,dp);
         
         
     }
