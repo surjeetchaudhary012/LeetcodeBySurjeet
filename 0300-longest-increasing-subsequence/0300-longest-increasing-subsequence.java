@@ -1,35 +1,31 @@
 class Solution {
     public int lengthOfLIS(int[] arr) {
         
-          ArrayList<Integer> list = new ArrayList<>();
+       int [] nums = new int[arr.length];
+        
+        int idx = 0;
         
         for(int i = 0; i < arr.length; i++){
             
-            if(i == 0){
-                list.add(arr[i]);
-            } else {
+            if(i == 0 || arr[i] > nums[idx - 1]){
                 
-                if(arr[i] > list.get(list.size() - 1)){
-                    list.add(arr[i]);
-                } else {
-                    
-                    int idx = searchIndex(list,arr[i]);
-                    
-                    list.set(idx,arr[i]);
-                    
-                }
+              nums[idx] = arr[i];
+              idx++;
+              
+            } else  {
                 
-            }
-            
-        }
+                 setIndex(nums,arr[i],idx-1);
+            } 
         
-        return list.size();
+        }
+    
+        return idx;
     }
     
-    private  int searchIndex(ArrayList<Integer> list,int val){
+    private  void setIndex(int [] nums,int val,int i){
         
         int start = 0;
-        int end = list.size() - 1;
+        int end = i;
         
         int idx = -1;
         
@@ -37,7 +33,7 @@ class Solution {
             
             int mid = (start + end) / 2;
             
-            if(list.get(mid) >= val){
+            if(nums[mid] >= val){
                 end = mid - 1;
                 idx =  mid;
             } else {
@@ -46,6 +42,6 @@ class Solution {
             
         }
         
-        return idx;
+        nums[idx] = val;
     }
 } 
