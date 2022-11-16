@@ -42,51 +42,51 @@ class Solution
     //Function to find length of longest increasing subsequence.
     static int longestSubsequence(int size, int arr[])
     {
-        int n = arr.length;
-        int [][] dp = new int[n+1][n+1];
+        ArrayList<Integer> list = new ArrayList<>();
         
-        for(int i = arr.length - 1; i >= 0; i--){
-            for(int j = i - 1; j >= -1; j--){
+        for(int i = 0; i < arr.length; i++){
+            
+            if(i == 0){
+                list.add(arr[i]);
+            } else {
                 
-                int take = 0;
-                if(j == -1 || arr[i] > arr[j]){
-                    take = 1 + dp[i+1][i+1];
+                if(arr[i] > list.get(list.size() - 1)){
+                    list.add(arr[i]);
+                } else {
+                    
+                    int idx = searchIndex(list,arr[i]);
+                    
+                    list.set(idx,arr[i]);
+                    
                 }
                 
-              int notTake = dp[i+1][j+1];
-                
-                dp[i][j+1] = Math.max(take,notTake);
-                
             }
+            
         }
         
-        return dp[0][0];
-        
-        // for(int [] a : dp){
-        //     Arrays.fill(a,-1);
-        // }
-        
-        // return findLIS(arr,0,-1,dp);
-        
+        return list.size();
     }
     
-    private static int findLIS(int [] arr, int idx , int prev , int [][] dp){
+    private static int searchIndex(ArrayList<Integer> list,int val){
         
-        if(idx == arr.length){
-            return 0;
+        int start = 0;
+        int end = list.size() - 1;
+        
+        int idx = -1;
+        
+        while(start <= end){
+            
+            int mid = (start + end) / 2;
+            
+            if(list.get(mid) >= val){
+                end = mid - 1;
+                idx =  mid;
+            } else {
+                start = mid + 1;
+            }
+            
         }
-   
-        if(dp[idx][prev + 1] != -1){
-            return dp[idx][prev+1];
-        }
-        int take = 0;
         
-        if(prev == -1 || arr[idx] > arr[prev]){
-            take = 1 + findLIS(arr,idx + 1,idx,dp);
-        }
-        
-      int  notTake = findLIS(arr,idx+1,prev,dp);
-        
-        return dp[idx][prev+1] = Math.max(take ,notTake);
+        return idx;
     }
 } 
