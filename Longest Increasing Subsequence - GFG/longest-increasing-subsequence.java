@@ -43,13 +43,30 @@ class Solution
     static int longestSubsequence(int size, int arr[])
     {
         int n = arr.length;
-        int [][] dp = new int[n][n+1];
+        int [][] dp = new int[n+1][n+1];
         
-        for(int [] a : dp){
-            Arrays.fill(a,-1);
+        for(int i = arr.length - 1; i >= 0; i--){
+            for(int j = i - 1; j >= -1; j--){
+                
+                int take = 0;
+                if(j == -1 || arr[i] > arr[j]){
+                    take = 1 + dp[i+1][i+1];
+                }
+                
+              int notTake = dp[i+1][j+1];
+                
+                dp[i][j+1] = Math.max(take,notTake);
+                
+            }
         }
         
-        return findLIS(arr,0,-1,dp);
+        return dp[0][0];
+        
+        // for(int [] a : dp){
+        //     Arrays.fill(a,-1);
+        // }
+        
+        // return findLIS(arr,0,-1,dp);
         
     }
     
@@ -58,7 +75,7 @@ class Solution
         if(idx == arr.length){
             return 0;
         }
-        
+   
         if(dp[idx][prev + 1] != -1){
             return dp[idx][prev+1];
         }
