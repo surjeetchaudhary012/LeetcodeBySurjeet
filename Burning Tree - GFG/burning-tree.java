@@ -127,25 +127,16 @@ class Solution
     	}
     }*/
     
+    private static int ans = 0;
+    
     public static int minTime(Node root, int target) 
     {
-       int ans = 0;
+        ans = 0;
        
-       ArrayList<Node> path = findPath(root,target);
+       findPath(root,target);
        
-      Node blockNode = null;
-       
-       for(int i = 0; i < path.size(); i++){
-           
-           Node node = path.get(i);
-           
-           ans = Math.max(ans,i + dfs(node,blockNode));
-           
-           blockNode = node;
-           
-       }
-       
-       return ans;
+       return  ans;
+     
     }
     
     
@@ -161,34 +152,34 @@ class Solution
         return Math.max(left,right) + 1;
     }
     
-     private static ArrayList<Node>  findPath(Node root, int target){
+     private static int findPath(Node root, int target){
         
         if(root == null){
-            return new ArrayList<>();
+            return -1;
         }
         
         if(root.data == target){
             
-            ArrayList<Node> path = new ArrayList<>();
-            path.add(root);
-            return path;
+             ans = dfs(root,null);
+             return 1;
+            
         }
         
-           ArrayList<Node>  left = findPath(root.left, target);
+           int  left = findPath(root.left, target);
          
-         if(left.size() > 0){
-             left.add(root);
-             return left;
+         if(left != -1){
+             ans = Math.max(ans,left + dfs(root,root.left));
+             return left + 1;
          }
          
-         ArrayList<Node> right = findPath(root.right, target);
+         int right = findPath(root.right, target);
          
-         if(right.size() >= 1){
-             right.add(root);
-             return right;
+         if(right != -1){
+            ans = Math.max(ans, right + dfs(root,root.right));
+            return right + 1;
          }
          
-         return new ArrayList<>();
+         return -1;
         
     }
 }
