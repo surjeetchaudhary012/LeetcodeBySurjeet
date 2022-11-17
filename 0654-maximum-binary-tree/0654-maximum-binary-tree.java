@@ -16,13 +16,11 @@
 class Solution {
     public TreeNode constructMaximumBinaryTree(int[] arr) {
         
-          TreeNode root = new TreeNode(-1);
-        
-        return constructTree(arr,null,0,arr.length - 1);
+        return constructTree(arr,0,arr.length - 1);
         
     }
     
-    private TreeNode constructTree(int [] arr, TreeNode node, int start, int end){
+    private TreeNode constructTree(int [] arr, int start, int end){
         
         if(start > end){
             return null;
@@ -32,14 +30,14 @@ class Solution {
             return new TreeNode(arr[start]);
         }
         
-         node = new TreeNode();
+        TreeNode node = new TreeNode();
         
         int maxIndex = findMax(arr,start,end);
         
         node.val = arr[maxIndex];
         
-        node.left = constructTree(arr,node.left,start,maxIndex-1);
-        node.right = constructTree(arr,node.right,maxIndex+1,end);
+        node.left = constructTree(arr,start,maxIndex-1);
+        node.right = constructTree(arr,maxIndex+1,end);
         
         return node;
         
