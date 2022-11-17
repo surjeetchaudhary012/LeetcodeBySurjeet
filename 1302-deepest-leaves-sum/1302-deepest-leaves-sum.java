@@ -14,36 +14,38 @@
  * }
  */
 class Solution {
-        
     public int deepestLeavesSum(TreeNode root) {
         
-      
-        int [] arr = new int[2];
+        LinkedList<TreeNode> que = new LinkedList<>();
         
-         findSum(root,arr,0);
+        int ans = 0;
         
-            return arr[1];
-    }
-    
-    public void findSum(TreeNode root, int [] arr, int ht){
+        que.add(root);
         
-        if(root == null){
-            return ;
-        }
-        
-            if(ht == arr[0]){
-                arr[1] += root.val;
+        while(que.size() > 0){
+            
+            int size = que.size();
+            ans = 0;
+            
+            while(size-- > 0){
+                
+                TreeNode node = que.remove();
+                
+                ans += node.val;
+                
+                if(node.left != null){
+                    que.add(node.left);
+                }
+                
+                if(node.right != null){
+                    que.add(node.right);
+                }
+                
             }
-        
-        if(ht > arr[0]){
-            arr[1] = root.val;
-            arr[0] = ht;
+                    
         }
-       
         
-        findSum(root.left,arr,ht+1);
-        findSum(root.right,arr,ht+1);
-        
+        return ans;
         
     }
 }
