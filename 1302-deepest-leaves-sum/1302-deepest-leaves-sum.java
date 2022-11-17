@@ -14,43 +14,36 @@
  * }
  */
 class Solution {
-        int sum;
-    int max;
-    int ht; 
+        
     public int deepestLeavesSum(TreeNode root) {
         
-        sum = 0;
-        max = 0;
-        ht = -1;
-        
+      
         int [] arr = new int[2];
         
-         findSum(root,arr);
+         findSum(root,arr,0);
         
-            return sum;
+            return arr[1];
     }
     
-    public void findSum(TreeNode root, int [] arr){
+    public void findSum(TreeNode root, int [] arr, int ht){
         
         if(root == null){
             return ;
         }
         
-      ht += 1;
+            if(ht == arr[0]){
+                arr[1] += root.val;
+            }
         
-        if(ht > max){
-            sum = 0;
-            max = ht;
+        if(ht > arr[0]){
+            arr[1] = root.val;
+            arr[0] = ht;
         }
+       
         
-        if(ht == max){
-            sum += root.val;
-        }
+        findSum(root.left,arr,ht+1);
+        findSum(root.right,arr,ht+1);
         
-        findSum(root.left,arr);
-        findSum(root.right,arr);
-        
-        ht -= 1;
         
     }
 }
