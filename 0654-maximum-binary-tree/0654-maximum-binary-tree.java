@@ -22,19 +22,12 @@ class Solution {
     
     private TreeNode constructTree(int [] arr, int start, int end){
         
-        if(start > end){
+        if(start == arr.length  || end == -1 || start > end){
             return null;
         }
-        
-        if(start == end){
-            return new TreeNode(arr[start]);
-        }
-        
-        TreeNode node = new TreeNode();
-        
+            
         int maxIndex = findMax(arr,start,end);
-        
-        node.val = arr[maxIndex];
+        TreeNode node = new TreeNode(arr[maxIndex]);
         
         node.left = constructTree(arr,start,maxIndex-1);
         node.right = constructTree(arr,maxIndex+1,end);
@@ -46,7 +39,7 @@ class Solution {
     private int findMax(int [] arr,int start, int end){
         
         int ans = -1;
-        int max = 0;
+        int max = -1;
         
         for(int i = start; i <= end; i++){
             
