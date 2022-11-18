@@ -22,7 +22,7 @@ class Solution {
     
     private TreeNode constructTree(int [] arr, int start, int end){
         
-        if(start == arr.length  || end == -1 || start > end){
+        if(start > end){
             return null;
         }
             
