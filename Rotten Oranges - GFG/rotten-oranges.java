@@ -39,6 +39,8 @@ class Solution
     
         int [][] visited = new int[n][m];
         
+        int freshCount  = 0;
+        
         Queue<Pair> que = new ArrayDeque<>();
         
         for(int i = 0;  i < n; i++){
@@ -48,10 +50,16 @@ class Solution
                     que.add(new Pair(i,j,0));
                     visited[i][j] = 1;
                 } 
+                
+                if(grid[i][j] == 1){
+                    freshCount++;
+                }
+                
             }
         }
         
         int minTime = 0;
+        int rottedCount = 0;
         
         int [] rdr = {-1,0,1,0};
         int [] cdr = {0,1,0,-1};
@@ -65,6 +73,10 @@ class Solution
             int time = p.time;
             
             minTime = Math.max(time,minTime);
+            
+            if(grid[row][col] == 1){
+                rottedCount++;
+            }
             
             for(int i = 0; i < 4; i++){
                 
@@ -83,15 +95,7 @@ class Solution
             }
         }
         
-        for(int i = 0; i < n; i++){
-            for(int j = 0; j < m; j++){
-                if(visited[i][j] == 0 && grid[i][j] == 1){
-                    return -1;
-                }
-            }
-        }
-        
-        return minTime;
+        return rottedCount == freshCount ? minTime : -1;
     }
 }
 
