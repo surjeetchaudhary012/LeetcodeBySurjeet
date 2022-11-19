@@ -73,7 +73,7 @@ class Solution
                 int t = time + 1;
                 
                 if(r < 0 || r == n || c < 0 || c == m || grid[r][c] != 1 || visited[r][c] == 1){
-        
+                    continue;
                 } else {
                     
                     que.add(new Pair(r,c,t));
