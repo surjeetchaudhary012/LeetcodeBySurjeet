@@ -1,7 +1,7 @@
 class Solution {
     public int orangesRotting(int[][] grid) {
         
-            int n = grid.length;
+        int n = grid.length;
         int m = grid[0].length;
     
         int [][] visited = new int[n][m];
