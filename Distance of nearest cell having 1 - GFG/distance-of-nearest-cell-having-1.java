@@ -45,6 +45,10 @@ class Solution
         boolean [][] visited = new boolean[n][m];
         int [][] ans = new int[n][m];
         
+        for(int [] arr : ans){
+            Arrays.fill(arr,-1);
+        }
+        
         Queue<Pair> que = new ArrayDeque<>();
         
         for(int i = 0; i < n; i++){
@@ -52,7 +56,7 @@ class Solution
                 
                 if(grid[i][j] == 1){
                     que.add(new Pair(i,j,0));
-                     visited[i][j] = true;
+                    ans[i][j] = 0;
                 }
             }
         }
@@ -67,8 +71,6 @@ class Solution
             int row = p.row;
             int col = p.col;
             int dist = p.dist;
-            
-            ans[row][col] = dist;
           
             for(int i = 0; i < 4; i++){
                 
@@ -76,11 +78,11 @@ class Solution
                 int c = col + cdr[i];
                 int d = dist + 1;
                 
-                if(r < 0 || r == n || c < 0 || c == m || visited[r][c] == true || grid[r][c] == 1){
+                if(r < 0 || r == n || c < 0 || c == m || ans[r][c] > 0 || grid[r][c] == 1){
                     continue;
                 } else {
                     que.add(new Pair(r,c,d));
-                    visited[r][c] = true;
+                    ans[r][c] = d;
                 }
             }
         }
