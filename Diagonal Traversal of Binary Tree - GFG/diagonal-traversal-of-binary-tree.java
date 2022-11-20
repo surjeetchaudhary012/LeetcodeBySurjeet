@@ -126,33 +126,69 @@ class Tree
 {
      public ArrayList<Integer> diagonal(Node root)
       {
-           
-           Queue<Node> que = new ArrayDeque<>();
-           
-          preFill(root,que);
           
-          ArrayList<Integer> list = new ArrayList<>();
-          
-          while(que.size() > 0){
-              
-              Node node = que.remove();
-              
-              list.add(node.data);
-              
-              if(node.left != null){
+          ArrayList<ArrayList<Integer>> list = new ArrayList<>();
+            Queue<Node> que = new ArrayDeque<>();
+            que.add(root);
             
-                 Node curr = node.left;
-                 
-                 while(curr != null){
-                     
-                     que.add(curr);
-                     curr = curr.right;
-                     
-                 }
-              } 
-          }
+            while(que.size() > 0){
+                
+                Node node = que.remove();
+                
+                 ArrayList<Integer> l = new ArrayList<>();
+                
+                while(node != null){
+                    
+                    if(node.left != null){
+                        que.add(node.left);
+                    }
+                    
+                    l.add(node.data);
+                    
+                    node = node.right;
+                    
+                }
+                
+                list.add(l);
+            
+            }
           
-          return list;
+           ArrayList<Integer> ans = new ArrayList<>();
+           
+           for(ArrayList<Integer> l : list){
+               for(int val : l){
+                   ans.add(val);
+               }
+           }
+           
+           return ans;
+           
+        //   Queue<Node> que = new ArrayDeque<>();
+           
+        //   preFill(root,que);
+          
+        //   ArrayList<Integer> list = new ArrayList<>();
+          
+        //   while(que.size() > 0){
+              
+        //       Node node = que.remove();
+              
+        //       list.add(node.data);
+              
+        //       if(node.left != null){
+            
+        //          Node curr = node.left;
+                 
+        //          while(curr != null){
+                     
+        //              que.add(curr);
+        //              curr = curr.right;
+                     
+        //          }
+        //       } 
+        //   }
+          
+        //   return list;
           
       }
       
