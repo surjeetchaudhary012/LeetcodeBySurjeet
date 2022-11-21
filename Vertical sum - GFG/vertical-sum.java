@@ -124,39 +124,33 @@ class Solution{
         
         int start = 0;
         int end = dist[1] - dist[0] + 1;
-        
-        // System.out.println(dist[0] + " " + dist[1]);
-    
+     
        ArrayList<Integer> list = new ArrayList<>();
        
        for(int i = 0; i < end; i++){
            list.add(0);
        }
        
-        Queue<Pair> que = new ArrayDeque<>();
-        que.add(new Pair(root,Math.abs(dist[0])));
-        
-        while(que.size() > 0){
-            
-            Pair pair = que.remove();
-            
-            int idx = pair.width;
-            
-            list.set(idx,list.get(idx) + pair.node.data);
-            
-            if(pair.node.left != null){
-                que.add(new Pair(pair.node.left,pair.width - 1));
-            }
-            
-            if(pair.node.right !=  null){
-                que.add(new Pair(pair.node.right,pair.width + 1));
-            }
-            
-        }
+         
+        findVerticalSum(root,Math.abs(dist[0]),list);
         
         return list;
         
     }
+    
+    private void findVerticalSum(Node root,int start,ArrayList<Integer> list){
+        
+        if(root == null){
+            return;
+        }
+        
+        list.set(start,list.get(start) + root.data);
+        
+        findVerticalSum(root.left,start - 1,list);
+        findVerticalSum(root.right,start + 1,list);
+        
+    }
+    
     
     private void findWidth(Node root,int width,int [] dist){
         
