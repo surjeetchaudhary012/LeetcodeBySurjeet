@@ -41,47 +41,48 @@ class Solution
     {
         
         int [] visited = new int[v];
-        Queue<Integer> que = new ArrayDeque<>();
-        
+      
         for(int i = 0; i < v; i++){
             
             if(visited[i] == 0){
-                que.add(i);
+                
+                visited[i] = 1;
+                
+                  boolean ans =  dfs(i,1,adj,visited);
+                  
+                  if(ans == false){
+                      return false;
+                  }
+                
             }
             
-          boolean ans =  bfs(adj,v,que,visited);
-          
-          if(ans == false){
-              return false;
-          }
-            
-           
         }
         
         return true;
         
     }
     
-    private boolean bfs(ArrayList<ArrayList<Integer>> adj,int v,Queue<Integer> que,int [] visited){
+    private boolean dfs(int start,int color,ArrayList<ArrayList<Integer>> adj,int [] visited){
         
-        while(que.size() > 0){
+        for(int node : adj.get(start)){
             
-                int node = que.remove();
+            if(visited[node] == 0){
                 
-                for(int val : adj.get(node)){
-                    
-                    if(visited[val] == 0){
-                        
-                        int clr = visited[node] == 1 ? 2 : 1;
-                        visited[val] = clr;
-                        que.add(val);
-                        
-                    } else if(visited[val] == visited[node]){
-                       return false;
-                    }
-                }
+                 int clr = color == 1 ? 2 : 1;
+                 visited[node] = clr;
+                 
+                 boolean ans = dfs(node,clr,adj,visited);
+                 
+                 if(ans == false){
+                     return false;
+                 }
+                 
+            } else if (visited[node] == visited[start]){
+                return false;
+            }
+            
         }
-        
+       
         return true;
     }
 }
