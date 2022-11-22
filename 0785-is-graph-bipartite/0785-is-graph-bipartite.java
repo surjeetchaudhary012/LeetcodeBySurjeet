@@ -27,13 +27,14 @@ class Solution {
     
     private boolean dfs(int start,int color,int [][] adj,int [] visited){
         
+        visited[start] = color;
+        
         for(int node : adj[start]){
             
             if(visited[node] == 0){
                 
                  int clr = color == 1 ? 2 : 1;
-                 visited[node] = clr;
-                 
+ 
                  boolean ans = dfs(node,clr,adj,visited);
                  
                  if(ans == false){
