@@ -41,12 +41,12 @@ class Solution
     {
         
         int [] visited = new int[v];
-        Queue<Pair> que = new ArrayDeque<>();
+        Queue<Integer> que = new ArrayDeque<>();
         
         for(int i = 0; i < v; i++){
             
             if(visited[i] == 0){
-                que.add(new Pair(i,1));
+                que.add(i);
             }
             
           boolean ans =  bfs(adj,v,que,visited);
@@ -62,13 +62,11 @@ class Solution
         
     }
     
-    private boolean bfs(ArrayList<ArrayList<Integer>> adj,int v,Queue<Pair> que,int [] visited){
+    private boolean bfs(ArrayList<ArrayList<Integer>> adj,int v,Queue<Integer> que,int [] visited){
         
         while(que.size() > 0){
             
-                Pair p = que.remove();
-                
-               int node = p.node;
+                int node = que.remove();
                 
                 for(int val : adj.get(node)){
                     
@@ -76,7 +74,7 @@ class Solution
                         
                         int clr = visited[node] == 1 ? 2 : 1;
                         visited[val] = clr;
-                        que.add(new Pair(val,clr));
+                        que.add(val);
                         
                     } else if(visited[val] == visited[node]){
                        return false;
@@ -88,12 +86,3 @@ class Solution
     }
 }
 
-class Pair {
-    int node;
-    int color;
-    
-    Pair(int node, int color){
-        this.node = node;
-        this.color = color;
-    }
-}
