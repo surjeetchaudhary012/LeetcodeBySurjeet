@@ -68,18 +68,17 @@ class Solution
             
                 Pair p = que.remove();
                 
-               int color = p.color;
                int node = p.node;
                 
                 for(int val : adj.get(node)){
                     
                     if(visited[val] == 0){
                         
-                        int clr = color == 1 ? 2 : 1;
+                        int clr = visited[node] == 1 ? 2 : 1;
                         visited[val] = clr;
                         que.add(new Pair(val,clr));
                         
-                    } else if(visited[val] == color){
+                    } else if(visited[val] == visited[node]){
                        return false;
                     }
                 }
