@@ -64,7 +64,7 @@ class Solution {
                  if(detectCycle(graph,adjNode,visited,pathVisited)){
                      return true;
                  }
-             } else if (visited[adjNode] == pathVisited[adjNode]){
+             } else if (pathVisited[adjNode]){
                  return true;
              }
          }
