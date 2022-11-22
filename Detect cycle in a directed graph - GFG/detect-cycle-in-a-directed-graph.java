@@ -37,13 +37,13 @@ class Solution {
         
         int n = V;
         
-        boolean [] visited = new boolean[n];
-        boolean [] pathVisited = new boolean[n];
+        int [] visited = new int[n];
+    
         
         for(int i = 0; i < n; i++){
             
-            if(visited[i] == false){
-                if(detectCycle(adj,i,visited,pathVisited)){
+            if(visited[i] == 0){
+                if(detectCycle(adj,i,visited)){
                     return true;
                 }
             }
@@ -53,23 +53,23 @@ class Solution {
     }
     
      private boolean detectCycle(ArrayList<ArrayList<Integer>> graph,int startNode, 
-     boolean [] visited, boolean [] pathVisited){
+     int [] visited){
          
-         visited[startNode] = true;
-         pathVisited[startNode] = true;
+         visited[startNode] = 1;
+         visited[startNode] += 1;
          
          for(int adjNode : graph.get(startNode)){
              
-             if(visited[adjNode] == false){
-                 if(detectCycle(graph,adjNode,visited,pathVisited)){
+             if(visited[adjNode] == 0){
+                 if(detectCycle(graph,adjNode,visited)){
                      return true;
                  }
-             } else if (pathVisited[adjNode]){
+             } else if (visited[adjNode] == 2){
                  return true;
              }
          }
          
-         pathVisited[startNode] = false;
+         visited[startNode] -= 1;
          return false;
      }
 }
