@@ -4,60 +4,49 @@ class Solution {
         int v = graph.length;
         
          int [] visited = new int[v];
-         Queue<Pair> que = new ArrayDeque<>();
-        
+      
         for(int i = 0; i < v; i++){
             
             if(visited[i] == 0){
-                que.add(new Pair(i,1));
+                
+                visited[i] = 1;
+                
+                  boolean ans =  dfs(i,1,graph,visited);
+                  
+                  if(ans == false){
+                      return false;
+                  }
+                
             }
             
-          boolean ans =  bfs(graph,v,que,visited);
-          
-          if(ans == false){
-              return false;
-          }
-               
         }
         
         return true;
         
     }
     
-    private boolean bfs(int [][] adj,int v,Queue<Pair> que,int [] visited){
+    private boolean dfs(int start,int color,int [][] adj,int [] visited){
         
-        while(que.size() > 0){
+        for(int node : adj[start]){
             
-                Pair p = que.remove();
+            if(visited[node] == 0){
                 
-               int color = p.color;
-               int node = p.node;
-                
-                for(int val : adj[node]){
-                    
-                    if(visited[val] == 0){
-                        
-                        int clr = color == 1 ? 2 : 1;
-                        visited[val] = clr;
-                        que.add(new Pair(val,clr));
-                        
-                    } else if(visited[val] == color){
-                       return false;
-                    }
-                }
+                 int clr = color == 1 ? 2 : 1;
+                 visited[node] = clr;
+                 
+                 boolean ans = dfs(node,clr,adj,visited);
+                 
+                 if(ans == false){
+                     return false;
+                 }
+                 
+            } else if (visited[node] == visited[start]){
+                return false;
+            }
+            
         }
-        
+       
         return true;
-    }
-}
-
-class Pair {
-    int node;
-    int color;
-    
-    Pair(int node, int color){
-        this.node = node;
-        this.color = color;
     }
 }
  
