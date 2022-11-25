@@ -26,39 +26,34 @@ class GFG
 
 class Solution{
     int findMinInsertions(String s){
-        int n = s.length();
-       int [][] dp = new int[n][n];
+        
+            int n = s.length();
+       int [][] dp = new int[n+1][n+1];
        
-       for(int [] a : dp){
-           Arrays.fill(a,-1);
+       String rs = reverse(s);
+        
+       for(int i = 1; i <= n; i++){
+           for(int j = 1; j <= n; j++){
+               
+               if(s.charAt(i-1) == rs.charAt(j-1)){
+                   dp[i][j] = 1 + dp[i-1][j-1];
+               } else {
+                   dp[i][j] = Math.max(dp[i-1][j],dp[i][j-1]);
+               }
+           }
        }
        
-       return n - findLPS(s,0,n-1,dp);
+       return n - dp[n][n];       
     }
     
-    private int findLPS(String s , int start, int end, int [][] dp){
+    private String reverse(String s){
         
-        if(start > end){
-            return 0;
+        String rev = "";
+        
+        for(int i = 0; i < s.length(); i++){
+            rev = s.charAt(i) + rev;
         }
         
-        if(start == end){
-            return 1;
-        }
-        
-        if(dp[start][end] != -1){
-            return dp[start][end];
-        }
-        
-        int match = 0;
-        int notMatch = 0;
-        
-        if(s.charAt(start) == s.charAt(end)){
-            match = 2 + findLPS(s,start + 1,end - 1,dp);
-        } else {
-            notMatch = Math.max(findLPS(s,start + 1,end,dp),findLPS(s,start,end - 1,dp));
-        }
-        
-        return dp[start][end] =  Math.max(match,notMatch);
+        return rev;
     }
 }
