@@ -16,19 +16,17 @@ class Solution {
     
     private int find(String s , String t , int i , int j,int [][] dp){
         
-        if(i == s.length()){
-            if(j == t.length()){
-                return 1; 
-            } else {
-                return 0;
-            }
+                if(j == t.length()){
+            return 1;
         }
+        
+        if(i == s.length()){
+          return 0;
+            } 
         
         int mod = 1000000000 + 7;
         
-        if(j == t.length()){
-            return 1;
-        }
+
         
         if(dp[i][j] != -1){
             return dp[i][j];
