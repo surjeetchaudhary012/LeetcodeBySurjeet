@@ -50,18 +50,20 @@ class Solution {
         
         if(dp[i][j] < Integer.MAX_VALUE)  return dp[i][j];
         
-       
+      
+        int notMatch = 0;
         
         if(word1.charAt(i) == word2.charAt(j)){
-             return dp[i][j] = findDist(word1,word2,i-1,j-1,dp);
-        } 
-        
+              notMatch = findDist(word1,word2,i-1,j-1,dp);
+        } else {
             
             int replace = findDist(word1,word2,i-1,j-1,dp);
             int delete =  findDist(word1,word2,i-1,j,dp);
             int insert =  findDist(word1,word2,i,j-1,dp);
             
-           return dp[i][j] = 1 +  Math.min(replace,Math.min(delete,insert));
-        
+            notMatch = 1 +  Math.min(replace,Math.min(delete,insert));
         }
+        
+        return dp[i][j] = notMatch;
+    }
 }
