@@ -35,17 +35,18 @@ class Solution {
         }
         
         int match = 0;
-        int match2 = 0;
         int notMatch = 0;
         
         if(s.charAt(i) == t.charAt(j)){
-         match =  find(s,t,i+1,j+1,dp);
-         match2 = find(s,t,i+1,j,dp);
+            
+         match =  find(s,t,i+1,j+1,dp) + find(s,t,i+1,j,dp);
+        
         } else {
+            
             notMatch = find(s,t,i+1,j,dp);
         }
         
-        return dp[i][j] = (match + notMatch + match2) % mod;
+        return dp[i][j] = (match + notMatch) % mod;
         
     }
 }
