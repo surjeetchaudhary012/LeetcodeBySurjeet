@@ -24,21 +24,22 @@ class Solution {
             return word1.length() - i;
         }
         
-        if(dp[i][j] > -1)  return dp[i][j];
+        if(dp[i][j] != -1)  return dp[i][j];
         
-       int ans = 0;
-        
+     
         if(word1.charAt(i) == word2.charAt(j)){
-             ans = findDist(word1,word2,i+1,j+1,dp);
+            
+             return dp[i][j] = findDist(word1,word2,i+1,j+1,dp);
+            
         } else {
             
             int replace = findDist(word1,word2,i+1,j+1,dp);
             int delete =  findDist(word1,word2,i+1,j,dp);
             int insert =  findDist(word1,word2,i,j+1,dp);
             
-            ans = 1 +  Math.min(replace,Math.min(delete,insert));
+            return dp[i][j] = 1 +  Math.min(replace,Math.min(delete,insert));
         }
         
-        return dp[i][j] = ans;
+      
     }
 }
