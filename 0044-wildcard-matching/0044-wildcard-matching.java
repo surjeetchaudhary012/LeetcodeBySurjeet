@@ -63,11 +63,13 @@ class Solution {
             
         } else if (pattern.charAt(j) == '*'){
             
-           int starMatch = find(s,pattern,i,j+1,dp) + find(s,pattern,i+1,j,dp);
-           
-           if(starMatch >= 1){
-               return dp[i][j] = 1;
-           }
+           for(int start = i; start <= s.length(); start++){
+              int  starMatch  = find(s,pattern,start,j+1,dp);
+                
+                if(starMatch == 1){
+                    return dp[i][j] = 1;
+                }
+            }
             
         }  
     
