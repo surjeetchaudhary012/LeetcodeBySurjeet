@@ -1,22 +1,43 @@
 class Solution {
     public boolean isMatch(String s, String pattern) {
         
-          int  n = s.length();
+           int  n = s.length();
         int m = pattern.length();
         
-        int [][] dp = new int[n][m];
-        
-        for(int [] arr : dp){
-            Arrays.fill(arr,-1);
-        }
-        
-        int ans =  find(s,pattern,0,0,dp);
-        
-        if(ans == 1){
-            return true;
-        } else {
-            return false;
-        }
+      boolean [][] dp  = new boolean[n+1][m+1];
+      
+      dp[0][0] = true;
+      
+      for(int j = 1; j <= m; j++){
+          boolean flag = true;
+          
+          for(int i = 1; i <= j; i++){
+              
+              if(pattern.charAt(i-1) != '*'){
+                  flag = false;
+                  break;
+              }
+              
+             dp[0][i] = flag;
+             
+          }
+      }
+      
+         for(int i = 1; i <= n; i++){
+             for(int j = 1; j <= m; j++){
+             
+                 if(s.charAt(i-1) == pattern.charAt(j-1) || pattern.charAt(j-1) == '?'){
+                     dp[i][j] = dp[i-1][j-1];
+                         
+                 } else if(pattern.charAt(j-1) == '*'){
+                     dp[i][j] = dp[i-1][j] || dp[i][j-1];
+                 } 
+                 
+             }
+         }
+         
+         
+         return dp[n][m];
         
     }
     
