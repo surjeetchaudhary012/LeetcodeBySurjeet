@@ -61,45 +61,48 @@ class Main {
 class Solution
 {
     //Function to return list containing vertices in Topological order. 
-    static int[] topoSort(int V, ArrayList<ArrayList<Integer>> adj) 
+    static int[] topoSort(int n, ArrayList<ArrayList<Integer>> graph) 
     {
         
-        int [] arr = new int[V];
+        int [] degree = new int[n];
+        int [] sort = new int[n];
         
-        boolean [] visited = new boolean[V];
-        
-        Stack<Integer> st = new Stack<>();
-        
-        for(int i = 0; i < V; i++){
+        for(int i = 0; i < graph.size(); i++){
             
-            if(visited[i] == false){
-                dfs(i,adj,visited,st);
+            for(int val : graph.get(i)){
+                degree[val] += 1;
+            }
+            
+        }
+        
+        Queue<Integer> que = new ArrayDeque<>();
+        
+        for(int i = 0; i < degree.length; i++){
+            
+            if(degree[i] == 0){
+                que.add(i);
             }
         }
         
         int i = 0;
-        while(st.size() > 0){
-            arr[i] = st.pop();
+        
+        while(que.size() > 0){
+            
+            int val = que.remove();
+            sort[i] = val;
             i++;
-        }
-        
-        return arr;
-    }
-    
-    private static void dfs(int start, ArrayList<ArrayList<Integer>> adj,boolean [] visited
-    ,Stack<Integer> st){
-        
-        visited[start] = true;
-        
-        for(int node : adj.get(start)){
             
-            if(visited[node] == false){
-                dfs(node,adj,visited,st);
-            }
+            for(int node : graph.get(val)){
+                degree[node] -= 1;
+                
+                if(degree[node] == 0){
+                    que.add(node);
+                }
+             }
             
         }
         
-        st.push(start);
+        return sort;
         
     }
 }
