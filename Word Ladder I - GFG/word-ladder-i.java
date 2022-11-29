@@ -33,114 +33,57 @@ class Solution
     public int wordLadderLength(String startWord, String targetWord, String[] list)
     {
         
-        ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
+        int n = list.length;
+        HashSet<String> set = new HashSet<>();
+        set.add(startWord);
         
-        for(int i = 0; i < list.length; i++){
-            graph.add(new ArrayList<Integer>());
-        }
-
-        int src = -1;
-        int target = -1;
-        
-        for(int i = 0; i < list.length; i++){
+        for(int i = 0; i < n; i++){
             
-              String word1 = list[i];
-              int m = word1.length();
-              
-              if(word1.equals(startWord)){
-                  src = i;
-              }
-              
-              if(word1.equals(targetWord)){
-                  target = i;
-              }
-            
-            for(int j = 0; j < list.length; j++){
-                
-                int diff = 0;
-                String word2 = list[j];
-                
-                for(int k = 0; k < m; k++){
-                    
-                    if(word1.charAt(k) != word2.charAt(k)){
-                        diff++;
-                    }
-                }
-                
-                if(diff == 1){
-                graph.get(i).add(j);
-                }
-                
-            }
-            
+            set.add(list[i]);
         }
         
-        if(src == -1){
-            
-            graph.add(new ArrayList<Integer>());
-            
-              String word1 = startWord;
-              int m = word1.length();
-              src = graph.size() - 1;
-             
-            for(int j = 0; j < list.length; j++){
-                
-                int diff = 0;
-                String word2 = list[j];
-                
-                for(int k = 0; k < m; k++){
-                    
-                    if(word1.charAt(k) != word2.charAt(k)){
-                        diff++;
-                    }
-                }
-                
-                if(diff == 1){
-                    
-                    graph.get(src).add(j);
-                    graph.get(j).add(src);
-                    
-                }
-                
-            }
-        }
-    
-    //   System.out.println(graph);
-
-        int n = graph.size();    
-        boolean [] visited = new boolean[n];
+        Queue<String> que = new ArrayDeque<>();
+        que.add(startWord);
+        set.remove(startWord);
+        int m = startWord.length();
         
-        Queue<Integer> que = new ArrayDeque<>();
-        
-        que.add(src);
         int level = 0;
         
         while(que.size() > 0){
             
             int size = que.size();
-        
-            while(size-- > 0){
             
-                int startNode = que.remove();
-                 
-                if(target == startNode){
-                   return level + 1;
+            while(size-- > 0){
+                
+                String node = que.remove();
+
+                if(node.equals(targetWord)){
+                    return level + 1;
                 }
                 
-                visited[startNode] = true;
-                
-                 for(int node : graph.get(startNode)){
-                     
-                     if(visited[node] == false){
-                         que.add(node);
-                     }
-                     
-                 }
+            
+                for(int i = 0; i < m; i++){
+                    
+                    for(char ch = 'a'; ch <= 'z'; ch++){
+                        
+                        StringBuilder word = new StringBuilder(node);
+                    
+                         word.setCharAt(i,ch);
+                         
+                         String newWord = word.toString();
+                         
+                        if(set.contains(newWord)){
+                            que.add(newWord);
+                            set.remove(newWord);
+                        }
+                        
+                    }
+                    
+                }
             }
             
-             level++;
+            level++;
         }
-        
         return 0;
     }
 }
