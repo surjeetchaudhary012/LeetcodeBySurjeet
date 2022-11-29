@@ -68,13 +68,13 @@ class Solution {
             int wt = startNode.wsf;
             
             for(int nbr : graph.get(startNode.node)){
-                
+            
+                if(visited[nbr] == false){
+             
                  if(dist[nbr] > wt + 1){
                     dist[nbr] = wt + 1;
                 }
-            
-                if(visited[nbr] == false){
-
+                    
                   que.add(new Pair(nbr,dist[nbr]));
                 }
                 
