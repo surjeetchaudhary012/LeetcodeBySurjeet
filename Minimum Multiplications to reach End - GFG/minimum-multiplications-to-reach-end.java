@@ -38,13 +38,13 @@ class Solution {
         
         Queue<Node> que = new ArrayDeque<>();
         
-        HashSet<Integer> set = new HashSet<>();
-        
+       int [] dist = new int[100000];
+       Arrays.fill(dist,Integer.MAX_VALUE);
+       dist[start] = 0;
         
         int mod = 100000;
         
         que.add(new Node(start,0));
-        set.add(start);
         
         while(que.size() > 0){
             
@@ -62,17 +62,11 @@ class Solution {
                      return count + 1;
                  }
                
-                 if(set.contains(num)){
-                     continue;
-                 }
-                 
-                 if(set.size() >= mod){
-                     return -1;
-                 }
-                 
-                 set.add(num);
-                 que.add(new Node(num,count + 1));
-                
+               if(dist[num] > dist[val] + 1){
+                   dist[num] = dist[val] + 1;
+                   que.add(new Node(num,count + 1));
+               }
+              
             }
         }
  
@@ -80,12 +74,4 @@ class Solution {
     }
 }
 
-class Node {
-    int val;
-    int count;
-    
-    Node(int val , int count){
-        this.val = val;
-        this.count = count;
-    }
-}
+
