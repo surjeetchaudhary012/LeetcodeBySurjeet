@@ -36,9 +36,7 @@ class GFG {
 class Solution {
     int minimumMultiplications(int[] arr, int start, int end) {
         
-        PriorityQueue<Node> que = new PriorityQueue<>((a,b) -> {
-            return Integer.compare(a.count,b.count);
-        });
+        Queue<Node> que = new ArrayDeque<>();
         
         HashSet<Integer> set = new HashSet<>();
         
@@ -63,8 +61,6 @@ class Solution {
                  if(num == end){
                      return count + 1;
                  }
-                 
-                //  System.out.println(set + "-->" + num);
                
                  if(set.contains(num)){
                      continue;
